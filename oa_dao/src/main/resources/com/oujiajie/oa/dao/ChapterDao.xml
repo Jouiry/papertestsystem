@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.ChapterDao">
+    <resultMap id="chapter" type="Chapter">
+        <id property="chapterId" column="chapter_id" javaType="int"/>
+        <result property="chapterName" column="chapter_name" javaType="String"/>
+        <association property="points" column="chapter_id" javaType="java.util.List" select="com.oujiajie.oa.dao.PointDao.selectByChapId" />
+
+    </resultMap>
+
+    <select id="select" resultMap="chapter" parameterType="Integer">
+        select * from `chapter` where chapter_id = #{chapterId}
+    </select>
+
+    <select id="selectAll" resultMap="chapter" >
+        select * from `chapter`
+    </select>
+
+</mapper>

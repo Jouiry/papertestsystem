@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.PaperDao">
+    <resultMap id="paper" type="Paper">
+        <id property="paperId" column="paper_id" javaType="int"/>
+        <result property="paperName" column="paper_name" javaType="String"/>
+        <result property="paperTeacher" column="paper_teacher" javaType="Integer"/>
+        <result property="paperDate" column="paper_date" javaType="java.util.Date"/>
+        <association property="teacher" column="paper_teacher" javaType="Teacher" select="com.oujiajie.oa.dao.TeacherDao.select" />
+        <association property="paperQues" column="paper_id" javaType="java.util.List" select="com.oujiajie.oa.dao.PaperQueDao.select" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="paperId" parameterType="Paper">
+        insert into `paper`(paper_id,paper_name,paper_teacher,paper_date)
+        values(#{paperId},#{paperName},#{paperTeacher},#{paperDate})
+    </insert>
+
+    <update id="update" parameterType="Paper">
+        update `paper` set paper_name=#{paperName},paper_teacher=#{paperTeacher} where paper_id=#{paperId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `paper` where paper_id=#{paperId}
+    </delete>
+
+    <select id="select" resultMap="paper" parameterType="Integer">
+        select * from `paper` where paper_id = #{paperId}
+    </select>
+
+    <select id="selectAll" resultMap="paper" >
+        select * from `paper`
+    </select>
+</mapper>

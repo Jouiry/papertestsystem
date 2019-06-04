@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.AdminDao">
+    <resultMap id="admin" type="Admin">
+        <id property="adminId" column="admin_id" javaType="int"/>
+        <result property="adminName" column="admin_name" javaType="String"/>
+        <result property="adminPwd" column="admin_pwd" javaType="String"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="adminId" parameterType="Admin">
+        insert into `admin`(admin_id,admin_name,admin_pwd)
+        values(#{adminId},#{adminName},#{adminPwd})
+    </insert>
+
+    <update id="update" parameterType="Admin">
+        update `admin` set admin_name=#{adminName},admin_pwd=#{adminPwd} where admin_id=#{adminId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `admin` where admin_id=#{adminId}
+    </delete>
+
+    <select id="select" resultMap="admin" parameterType="Integer">
+        select * from `admin` where admin_id = #{adminId}
+    </select>
+
+    <select id="selectAll" resultMap="admin" >
+        select * from `admin`
+    </select>
+
+</mapper>

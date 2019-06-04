@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.PointDao">
+    <resultMap id="point" type="Point">
+        <id property="pointId" column="point_id" javaType="int"/>
+        <result property="pointName" column="point_name" javaType="String"/>
+        <result property="chapterId" column="chapter_id" javaType="Integer"/>
+        <association property="chapter" column="chapter_id" javaType="Chapter" select="com.oujiajie.oa.dao.ChapterDao.select" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pointId" parameterType="Point">
+        insert into `point`(point_name,chapter_id)
+        values(#{pointName},#{chapterId})
+    </insert>
+
+    <update id="update" parameterType="Point">
+        update `point` set point_name=#{pointName},chapter_id=#{chapterId} where point_id=#{pointId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `point` where point_id=#{pointId}
+    </delete>
+
+    <select id="select" resultMap="point" parameterType="Integer">
+        select * from `point` where point_id = #{pointId}
+    </select>
+
+    <select id="selectAll" resultMap="point" >
+        select * from `point`
+    </select>
+    <select id="selectByChapId" resultMap="point" parameterType="Integer">
+        select * from `point` where chapter_id = #{chapterId}
+    </select>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.QuestionDao">
+    <resultMap id="question" type="Question">
+        <id property="queId" column="que_id" javaType="int"/>
+        <result property="queType" column="que_type" javaType="Integer"/>
+        <result property="queDif" column="que_dif" javaType="Integer"/>
+        <result property="queChap" column="que_chap" javaType="Integer"/>
+        <result property="pointId" column="que_pointid" javaType="Integer"/>
+        <result property="queItem" column="que_item" javaType="String"/>
+        <result property="queAns" column="que_ans" javaType="String"/>
+        <result property="queA" column="que_a" javaType="String"/>
+        <result property="queB" column="que_b" javaType="String"/>
+        <result property="queC" column="que_c" javaType="String"/>
+        <result property="queD" column="que_d" javaType="String"/>
+        <association property="dif" column="que_dif" javaType="Dif" select="com.oujiajie.oa.dao.DifDao.select" />
+        <association property="chapter" column="que_chap" javaType="Chapter" select="com.oujiajie.oa.dao.ChapterDao.select" />
+        <association property="point" column="que_pointid" javaType="Point" select="com.oujiajie.oa.dao.PointDao.select" />
+        <association property="type" column="que_type" javaType="Type" select="com.oujiajie.oa.dao.TypeDao.select" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="queId" parameterType="Question">
+        insert into `question`(que_type,que_dif,que_chap,que_pointid,que_item,que_ans,que_a,que_b,que_c,que_d)
+        values(#{queType},#{queDif},#{queChap},#{pointId},#{queItem},#{queAns},#{queA},#{queB},#{queC},#{queD})
+    </insert>
+
+    <update id="update" parameterType="Question">
+        update `question` set que_type=#{queType},que_dif=#{queDif},que_chap=#{queChap},que_pointid=#{pointId},que_item=#{queItem},que_ans=#{queAns},que_a=#{queA},que_b=#{queB},que_c=#{queC},que_d=#{queD} where que_id=#{queId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `question` where que_id=#{queId}
+    </delete>
+
+    <select id="select" resultMap="question" parameterType="Integer">
+        select * from `question` where que_id = #{queId}
+    </select>
+
+    <select id="selectAll" resultMap="question" >
+        select * from `question`
+    </select>
+
+    <select id="selectBy" resultMap="question" parameterType="Question">
+        select * from `question`
+        where
+        1 = 1
+        <if test="queType != null and queType != '' and queType != '-1'">
+            AND que_type = #{queType}
+        </if>
+        <if test="queDif != null and queDif != '' and queDif != '-1'">
+            AND que_dif = #{queDif}
+        </if>
+        <if test="queChap != null and queChap != '' and queChap != '-1'">
+            AND que_chap = #{queChap}
+        </if>
+        <if test="pointId != null and pointId != '' and pointId != '-1'">
+            AND que_pointid = #{pointId}
+        </if>
+        <if test="queItem != null and queItem != ''">
+            AND que_item LIKE CONCAT(CONCAT('%',#{queItem}),'%')
+        </if>
+    </select>
+
+</mapper>

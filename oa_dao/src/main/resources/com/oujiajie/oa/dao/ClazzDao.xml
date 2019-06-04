@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.ClazzDao">
+    <resultMap id="clazz" type="Clazz">
+        <id property="classId" column="class_id" javaType="int"/>
+        <result property="className" column="class_name" javaType="String"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="classId" parameterType="Clazz">
+        insert into `clazz`(class_id,class_name)
+        values(#{classId},#{className})
+    </insert>
+
+    <update id="update" parameterType="Clazz">
+        update `clazz` set class_name=#{className} where class_id=#{classId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `clazz` where class_id=#{classId}
+    </delete>
+
+    <select id="select" resultMap="clazz" parameterType="Integer">
+        select * from `clazz` where class_id = #{classId}
+    </select>
+
+    <select id="selectAll" resultMap="clazz" >
+        select * from `clazz`
+    </select>
+
+</mapper>

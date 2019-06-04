@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.PaperQueDao">
+    <resultMap id="paperQue" type="PaperQue">
+        <result property="paperId" column="paper_id" javaType="Integer"/>
+        <result property="queId" column="que_id" javaType="Integer"/>
+        <association property="question" column="que_id" javaType="Question" select="com.oujiajie.oa.dao.QuestionDao.select" />
+    </resultMap>
+
+    <insert id="insert" parameterType="PaperQue">
+        insert into `paper_que`(paper_id,que_id)
+        values(#{paperId},#{queId})
+    </insert>
+
+
+    <delete id="delete" parameterType="Integer">
+        delete from `paper_que` where paper_id=#{paperId}
+    </delete>
+
+    <select id="select" resultMap="paperQue" parameterType="Integer">
+        select * from `paper_que` where paper_id = #{paperId}
+    </select>
+
+    <delete id="deleteOne">
+        delete from `paper_que` where paper_id = #{paperId} AND que_id = #{queId}
+    </delete>
+
+    <select id="selectAll" resultMap="paperQue" >
+        select * from `paper_que`
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oujiajie.oa.dao.TeacherDao">
+    <resultMap id="teacher" type="Teacher">
+        <id property="teaId" column="tea_id" javaType="int"/>
+        <result property="teaName" column="tea_name" javaType="String"/>
+        <result property="teaPwd" column="tea_pwd" javaType="String"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="teaId" parameterType="Teacher">
+        insert into `teacher`(tea_id,tea_name,tea_pwd)
+        values(#{teaId},#{teaName},#{teaPwd})
+    </insert>
+
+    <update id="update" parameterType="Teacher">
+        update `teacher` set tea_name=#{teaName},tea_pwd=#{teaPwd} where tea_id=#{teaId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from `teacher` where tea_id=#{teaId}
+    </delete>
+
+    <select id="select" resultMap="teacher" parameterType="Integer">
+        select * from `teacher` where tea_id = #{teaId}
+    </select>
+
+    <select id="selectAll" resultMap="teacher" >
+        select * from `teacher`
+    </select>
+
+</mapper>
